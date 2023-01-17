@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/coquiz-test/static/css/main.073c9b0a.css",
+    "main.js": "/coquiz-test/static/js/main.9cf559a1.js",
+    "static/js/787.4a5f02e8.chunk.js": "/coquiz-test/static/js/787.4a5f02e8.chunk.js",
+    "static/media/logo.svg": "/coquiz-test/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/coquiz-test/index.html",
+    "main.073c9b0a.css.map": "/coquiz-test/static/css/main.073c9b0a.css.map",
+    "main.9cf559a1.js.map": "/coquiz-test/static/js/main.9cf559a1.js.map",
+    "787.4a5f02e8.chunk.js.map": "/coquiz-test/static/js/787.4a5f02e8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.9cf559a1.js"
+  ]
+}
