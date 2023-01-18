@@ -5,7 +5,7 @@ import {
   walletConnectProvider,
 } from "@web3modal/ethereum";
 import {Web3Modal, useWeb3Modal} from "@web3modal/react";
-import {configureChains, createClient, WagmiConfig} from "wagmi";
+import {configureChains, createClient, WagmiConfig, useAccount} from "wagmi";
 import {mainnet} from "wagmi/chains";
 
 const App = () => {
@@ -27,11 +27,14 @@ const App = () => {
 
   const {open} = useWeb3Modal();
 
+  const { address } = useAccount();
+
   return (
     <>
       <WagmiConfig client={wagmiClient}>
         <>
           <button onClick={() => open()}>지갑연결</button>
+          <div>연결된 주소: {address}</div>
         </>
       </WagmiConfig>
 
