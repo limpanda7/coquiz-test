@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   EthereumClient,
   modalConnectors,
@@ -9,6 +9,7 @@ import {configureChains, createClient, WagmiConfig, useAccount} from "wagmi";
 import {mainnet} from "wagmi/chains";
 
 const App = () => {
+  const [firstOpen, setFirstOpen] = useState(true);
 
   const chains = [mainnet];
 
@@ -27,14 +28,30 @@ const App = () => {
 
   const {open} = useWeb3Modal();
 
-  const { address } = useAccount();
+  const {address} = useAccount();
+
+  useEffect(() => {
+    setTimeout(() => {
+      open();
+      setFirstOpen(false);
+    }, 500);
+  }, []);
+
+  useEffect(() => {
+    if (!firstOpen) {
+      console.log(`address: ${address}`);
+      console.log('leave');
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(`address: ${address}`);
+        window.ReactNativeWebView.postMessage('leave');
+      }
+    }
+  }, [address]);
 
   return (
     <>
       <WagmiConfig client={wagmiClient}>
         <>
-          <button onClick={() => open()}>지갑연결</button>
-          <div>연결된 주소: {address}</div>
         </>
       </WagmiConfig>
 
