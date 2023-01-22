@@ -11,7 +11,7 @@ import {getApps} from "firebase/app";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import {useParams} from "react-router-dom";
 
-const Main = () => {
+const Modal = () => {
   const [firstOpen, setFirstOpen] = useState(true);
 
   const chains = [mainnet];
@@ -79,4 +79,4 @@ const Main = () => {
   );
 }
 
-export default Main;
+export default Modal;

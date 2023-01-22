@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Main from "./Main";
+import Modal from "./Modal";
 import {initializeApp} from "firebase/app";
 
 const firebaseConfig = {
@@ -17,7 +17,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/:uid' element={<Main />} />
+        <Route path='modal/:uid' element={<Modal />} />
       </Routes>
     </BrowserRouter>
   );
