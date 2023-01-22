@@ -1,65 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import {
-  EthereumClient,
-  modalConnectors,
-  walletConnectProvider,
-} from "@web3modal/ethereum";
-import {Web3Modal, useWeb3Modal} from "@web3modal/react";
-import {configureChains, createClient, WagmiConfig, useAccount} from "wagmi";
-import {mainnet} from "wagmi/chains";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Main from "./Main";
+import {initializeApp} from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyASfhe2jcjVIjSK89sIDRwFHzYIBNLqnlU",
+  authDomain: "coquiztest.firebaseapp.com",
+  projectId: "coquiztest",
+  storageBucket: "coquiztest.appspot.com",
+  messagingSenderId: "455002882220",
+  appId: "1:455002882220:web:c30c8ea7baf200e5969f09"
+};
+
+initializeApp(firebaseConfig);
 
 const App = () => {
-  const [firstOpen, setFirstOpen] = useState(true);
-
-  const chains = [mainnet];
-
-  // Wagmi client
-  const {provider} = configureChains(chains, [
-    walletConnectProvider({projectId: 'dccff4a005c3731fbd4bce50f884a8ad'}),
-  ]);
-  const wagmiClient = createClient({
-    autoConnect: true,
-    connectors: modalConnectors({appName: "web3Modal", chains}),
-    provider,
-  });
-
-  // Web3Modal Ethereum Client
-  const ethereumClient = new EthereumClient(wagmiClient, chains);
-
-  const {open} = useWeb3Modal();
-
-  const {address} = useAccount();
-
-  useEffect(() => {
-    setTimeout(() => {
-      open();
-      setFirstOpen(false);
-    }, 500);
-  }, []);
-
-  useEffect(() => {
-    if (!firstOpen) {
-      console.log(`address: ${address}`);
-      console.log('leave');
-      if (window.ReactNativeWebView) {
-        window.ReactNativeWebView.postMessage(`address: ${address}`);
-        window.ReactNativeWebView.postMessage('leave');
-      }
-    }
-  }, [address]);
-
   return (
-    <>
-      <WagmiConfig client={wagmiClient}>
-        <>
-        </>
-      </WagmiConfig>
-
-      <Web3Modal
-        projectId="dccff4a005c3731fbd4bce50f884a8ad"
-        ethereumClient={ethereumClient}
-      />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/:uid' element={<Main />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
