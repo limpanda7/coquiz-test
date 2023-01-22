@@ -9,9 +9,10 @@ import {configureChains, createClient, WagmiConfig, useAccount} from "wagmi";
 import {mainnet} from "wagmi/chains";
 import {getApps} from "firebase/app";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
-import {useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import queryString from 'query-string';
 
-const Modal = () => {
+const Main = () => {
   const [firstOpen, setFirstOpen] = useState(true);
 
   const chains = [mainnet];
@@ -40,14 +41,14 @@ const Modal = () => {
     }, 500);
   }, []);
 
-  const {uid} = useParams();
-  console.log(uid)
+  const {search} = useLocation();
+  const {uid} = queryString.parse(search);
 
   const saveAddress = () => {
     const app = getApps();
     const db = getFirestore(app[0]);
     const collectionRef = collection(db, 'user_wallet_address');
-    setDoc(doc(collectionRef, uid), {
+    setDoc(doc(collectionRef, uid as string), {
       wallet_address: address || ''
     })
   }
@@ -79,4 +80,4 @@ const Modal = () => {
   );
 }
 
-export default Modal;
+export default Main;
