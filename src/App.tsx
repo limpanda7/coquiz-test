@@ -8,12 +8,13 @@ import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import queryString from "query-string";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyASfhe2jcjVIjSK89sIDRwFHzYIBNLqnlU",
-  authDomain: "coquiztest.firebaseapp.com",
-  projectId: "coquiztest",
-  storageBucket: "coquiztest.appspot.com",
-  messagingSenderId: "455002882220",
-  appId: "1:455002882220:web:c30c8ea7baf200e5969f09"
+  apiKey: "AIzaSyA4AZDvV_Exi4EarJ34_bzKfZSkRYpcn1s",
+  authDomain: "coquiz-19d0e.firebaseapp.com",
+  projectId: "coquiz-19d0e",
+  storageBucket: "coquiz-19d0e.appspot.com",
+  messagingSenderId: "1053063364183",
+  appId: "1:1053063364183:web:a4875ad4a14e9d41b32d12",
+  measurementId: "G-1N9TYREP0Q"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -38,18 +39,19 @@ const App = () => {
 
   const {open, isOpen} = useWeb3Modal();
 
-  const {address} = useAccount();
-
   useEffect(() => {
-    setTimeout(() => {
-      open();
+    const openModal = async() => {
+      await open();
       setFirstOpen(false);
-    }, 500);
+    }
+    openModal();
   }, []);
 
+  // firestore에 uid 및 지갑주소 저장
+  // uid는 url 파라미터로 담겨서 온다
   const params = window.location.search;
   const {uid} = queryString.parse(params);
-  console.log(uid);
+  const {address} = useAccount();
 
   const saveAddress = () => {
     const db = getFirestore(app);
