@@ -1,24 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from 'react';
+import {
+  EthereumClient,
+  modalConnectors,
+  walletConnectProvider,
+} from "@web3modal/ethereum";
+import {Web3Modal, useWeb3Modal} from "@web3modal/react";
+import {configureChains, createClient, WagmiConfig, useAccount} from "wagmi";
 import {mainnet} from "wagmi/chains";
-import {configureChains, createClient, useAccount, WagmiConfig} from "wagmi";
-import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum";
-import {useWeb3Modal, Web3Modal} from "@web3modal/react";
-import {initializeApp} from "firebase/app";
+import {getApps} from "firebase/app";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
-import queryString from "query-string";
+import {useParams} from "react-router-dom";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyASfhe2jcjVIjSK89sIDRwFHzYIBNLqnlU",
-  authDomain: "coquiztest.firebaseapp.com",
-  projectId: "coquiztest",
-  storageBucket: "coquiztest.appspot.com",
-  messagingSenderId: "455002882220",
-  appId: "1:455002882220:web:c30c8ea7baf200e5969f09"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const App = () => {
+const Modal = () => {
   const [firstOpen, setFirstOpen] = useState(true);
 
   const chains = [mainnet];
@@ -47,14 +40,14 @@ const App = () => {
     }, 500);
   }, []);
 
-  const params = window.location.search;
-  const {uid} = queryString.parse(params);
-  console.log(uid);
+  const {uid} = useParams();
+  console.log(uid)
 
   const saveAddress = () => {
-    const db = getFirestore(app);
+    const app = getApps();
+    const db = getFirestore(app[0]);
     const collectionRef = collection(db, 'user_wallet_address');
-    setDoc(doc(collectionRef, uid as string), {
+    setDoc(doc(collectionRef, uid), {
       wallet_address: address || ''
     })
   }
@@ -86,4 +79,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default Modal;
